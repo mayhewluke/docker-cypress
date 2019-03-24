@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Builds a docker image for the given version of cypress
+
+VERSION=$1
+DIR=$(dirname "$(readlink -f "$0")")
+
+docker build -t cypress-with-binary:"$VERSION" --build-arg CYPRESS_VERSION="$VERSION" "$DIR/.."

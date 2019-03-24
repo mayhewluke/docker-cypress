@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Runs cypress in docker, using the version for the current project
+
+VERSION=$(yarn why cypress | grep Found | cut -d '"' -f 2 | cut -d '@' -f 2)
+
+docker run \
+  --rm \
+  -it \
+  -v "$PWD":/app \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -e DISPLAY=unix"$DISPLAY" \
+  -e CYPRESS_PORT="$CYPRESS_PORT" \
+  cypress-with-binary:"$VERSION" \
+  "$@"
